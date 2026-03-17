@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JunnuGaming – Watch & Earn</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#07080f;--s1:#0e1020;--s2:#141628;--s3:#1c2038;--acc:#f7631b;--acc2:#ffaa44;--gold:#ffd060;--grn:#00e87a;--blu:#38c8ff;--pur:#a855f7;--txt:#eef0fa;--mut:#6b7094;--bdr:#232640;--r:14px;}
+body{font-family:"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
+.scr{display:none;}.scr.on{display:block;}
+#LS{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(247,99,27,.12),transparent 70%);}
+#LS.on{display:flex;}
+.lbox{background:var(--s2);border:1px solid var(--bdr);border-radius:24px;padding:40px 32px;max-width:400px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.6);animation:fadeUp .5s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.l-logo{font-family:"Baloo 2",cursive;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.l-sub{color:var(--blu);font-size:.82rem;font-weight:600;margin:4px 0 16px;}
+.l-info{background:rgba(247,99,27,.07);border:1px solid rgba(247,99,27,.18);border-radius:12px;padding:13px 15px;margin-bottom:20px;text-align:left;}
+.l-info p{font-size:.78rem;color:var(--acc2);line-height:2;}
+.l-info b{color:var(--grn);}
+.gbtn{width:100%;background:#fff;color:#222;border:none;border-radius:12px;padding:12px 18px;font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;margin-bottom:10px;transition:transform .15s;}
+.gbtn:hover{transform:translateY(-2px);}
+.alnk{font-size:.72rem;color:var(--mut);cursor:pointer;text-decoration:underline;}
+#AS{min-height:100vh;padding-bottom:68px;}
+.tnav{position:sticky;top:0;z-index:200;background:rgba(7,8,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
+.tlogo{font-family:"Baloo 2",cursive;font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.tr{display:flex;align-items:center;gap:8px;}
+.bchip{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.25);border-radius:20px;padding:4px 12px;font-size:.78rem;font-weight:700;color:var(--grn);}
+.avt{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.72rem;border:2px solid var(--acc);}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(7,8,15,.97);border-top:1px solid var(--bdr);display:flex;height:62px;}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--mut);font-size:.6rem;font-weight:600;transition:color .2s;}
+.bni.on,.bni:hover{color:var(--acc);}
+.bni svg{width:20px;height:20px;}
+.pg{display:none;padding:14px;}.pg.on{display:block;}
+#plPg{padding:0;}
+.hero{background:linear-gradient(135deg,var(--s2),var(--s3));border:1px solid rgba(247,99,27,.2);border-radius:var(--r);padding:18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.hero h2{font-family:"Baloo 2",cursive;font-size:1.1rem;font-weight:800;}
+.hero p{color:var(--mut);font-size:.72rem;margin-top:2px;}
+.hamt{font-family:"Baloo 2",cursive;font-size:1.8rem;font-weight:800;color:var(--grn);line-height:1;}
+.hlbl{color:var(--mut);font-size:.63rem;text-align:right;margin-top:2px;}
+.stitle{font-family:"Baloo 2",cursive;font-size:.95rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.stitle::after{content:"";flex:1;height:1px;background:var(--bdr);}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.vc{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;}
+.vc:hover{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 12px 36px rgba(247,99,27,.18);}
+.vth{position:relative;padding-top:56.25%;background:#0a0a0f;}
+.vth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.vlive{position:absolute;top:7px;left:7px;background:rgba(220,30,30,.9);color:#fff;font-size:.58rem;font-weight:800;padding:2px 8px;border-radius:4px;display:flex;align-items:center;gap:3px;}
+.vldot{width:5px;height:5px;border-radius:50%;background:#fff;animation:bl 1s infinite;}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.15}}
+.vchip{position:absolute;top:7px;right:7px;background:rgba(0,232,122,.88);color:#000;font-weight:800;font-size:.58rem;padding:2px 8px;border-radius:20px;}
+.vplo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s;}
+.vc:hover .vplo{opacity:1;}
+.vi{padding:10px;}
+.vt{font-weight:600;font-size:.8rem;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.vm{display:flex;justify-content:space-between;font-size:.66rem;color:var(--mut);}
+.vetag{color:var(--grn);font-weight:700;}
+.phdr{padding:10px 14px;display:flex;align-items:center;}
+.bbtn{background:var(--s2);border:1px solid var(--bdr);color:var(--txt);border-radius:9px;padding:6px 13px;cursor:pointer;font-size:.78rem;display:flex;align-items:center;gap:5px;font-family:inherit;transition:border-color .2s,color .2s;}
+.bbtn:hover{border-color:var(--acc);color:var(--acc);}
+
+/* PLAYER WRAPPER - iframe + overlay */
+.player-outer{position:relative;width:100%;padding-top:56.25%;background:#000;}
+.player-outer iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+/* Transparent overlay to capture clicks */
+
+
+.pbody{padding:12px;}
+.ptit{font-family:"Baloo 2",cursive;font-size:.95rem;font-weight:700;margin-bottom:10px;line-height:1.3;}
+
+/* Earning status card */
+.earn-status{border-radius:12px;padding:12px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px;transition:all .3s;}
+.es-play{background:rgba(0,232,122,.1);border:1px solid rgba(0,232,122,.3);}
+.es-stop{background:rgba(247,99,27,.1);border:1px solid rgba(247,99,27,.3);}
+.es-icon{font-size:1.4rem;}
+.es-title{font-size:.86rem;font-weight:700;}
+.es-sub{font-size:.72rem;color:var(--mut);margin-top:2px;}
+
+.ebox{background:rgba(0,232,122,.06);border:1px solid rgba(0,232,122,.18);border-radius:11px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.elbl{color:var(--mut);font-size:.72rem;margin-bottom:2px;}
+.eval{font-family:"Baloo 2",cursive;font-size:1.3rem;font-weight:800;color:var(--grn);}
+.etim{font-family:"Baloo 2",cursive;font-size:1rem;font-weight:700;color:var(--blu);}
+.pbarw{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:11px;margin-bottom:8px;display:none;}
+.pbarw.aon{display:block;}
+.pblbl{display:flex;justify-content:space-between;font-size:.7rem;color:var(--mut);margin-bottom:6px;}
+.pblbl span:last-child{color:var(--grn);font-weight:700;}
+.pbtrack{background:var(--bdr);border-radius:3px;height:6px;overflow:hidden;}
+.pbfill{height:100%;background:linear-gradient(90deg,var(--acc),var(--gold));transition:width 1s linear;border-radius:3px;}
+.msrow{display:none;gap:4px;margin-bottom:8px;}
+.msrow.aon{display:flex;}
+.ms{flex:1;text-align:center;padding:6px 2px;border-radius:8px;font-size:.58rem;color:var(--mut);border:1px solid var(--bdr);transition:all .35s;}
+.ms.ok{background:rgba(0,232,122,.09);border-color:var(--grn);color:var(--grn);font-weight:700;}
+.ms .mv{font-family:"Baloo 2",cursive;font-size:.76rem;font-weight:800;}
+.ecard{background:linear-gradient(135deg,#112211,#0a1a10);border:1px solid rgba(0,232,122,.2);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
+.ecard::before{content:"";position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:200px;height:200px;background:radial-gradient(circle,rgba(0,232,122,.1),transparent 70%);pointer-events:none;}
+.ebig{font-family:"Baloo 2",cursive;font-size:2.5rem;font-weight:800;color:var(--grn);position:relative;}
+.esub{color:var(--mut);font-size:.72rem;margin-top:2px;position:relative;}
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px;position:relative;}
+.ecell{background:rgba(255,255,255,.04);border-radius:10px;padding:10px;}
+.ecell .v{font-family:"Baloo 2",cursive;font-size:1.08rem;font-weight:700;color:var(--acc2);}
+.ecell .l{font-size:.64rem;color:var(--mut);margin-top:2px;}
+.wcard{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;margin-bottom:11px;}
+.wcard h3{font-family:"Baloo 2",cursive;font-size:.92rem;font-weight:700;margin-bottom:12px;}
+.rogrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:11px;}
+.ro{background:var(--s1);border:2px solid var(--bdr);border-radius:11px;padding:10px 6px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;}
+.ro:hover,.ro.sel{border-color:var(--acc);background:rgba(247,99,27,.07);}
+.ro .ri2{font-size:1.3rem;margin-bottom:3px;}.ro .rn{font-size:.7rem;font-weight:700;}.ro .rr{font-size:.6rem;color:var(--mut);margin-top:1px;}
+.inp{background:var(--s1);border:1px solid var(--bdr);border-radius:9px;padding:9px 12px;color:var(--txt);font-size:.85rem;font-family:inherit;outline:none;width:100%;transition:border-color .2s;}
+.inp:focus{border-color:var(--acc);}
+.irow{display:flex;gap:7px;margin-bottom:7px;}
+.wbtn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none;border-radius:9px;padding:9px 16px;font-weight:800;cursor:pointer;font-family:inherit;font-size:.82rem;white-space:nowrap;}
+.wnote{font-size:.67rem;color:var(--mut);border:1px solid rgba(255,208,96,.12);border-radius:8px;padding:8px 11px;line-height:1.55;}
+.rtabs{display:flex;gap:7px;margin-bottom:11px;}
+.rtab{flex:1;padding:8px;text-align:center;border-radius:9px;font-size:.75rem;font-weight:700;cursor:pointer;border:1px solid var(--bdr);color:var(--mut);transition:all .2s;}
+.rtab.on{border-color:var(--acc);background:rgba(247,99,27,.09);color:var(--acc);}
+.rlist{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.ri{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:12px;}
+.ritop{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
+.rinm{font-size:.8rem;font-weight:700;}.riamt{font-family:"Baloo 2",cursive;font-size:1rem;font-weight:800;color:var(--acc2);}
+.rimeta{font-size:.64rem;color:var(--mut);margin-bottom:6px;}
+.ribadge{display:inline-block;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px;}
+.bps{background:rgba(0,232,122,.13);color:var(--grn);}.bam{background:rgba(255,170,68,.13);color:var(--acc2);}.bupi{background:rgba(56,200,255,.13);color:var(--blu);}
+.crow{display:flex;gap:7px;margin-top:6px;}
+.cinp{flex:1;background:var(--s1);border:1px solid rgba(168,85,247,.3);border-radius:7px;padding:7px 10px;color:var(--txt);font-family:monospace;font-size:.76rem;outline:none;text-transform:uppercase;}
+.appbtn{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:7px;padding:7px 12px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.dcode{background:rgba(0,232,122,.06);border:1px solid rgba(0,232,122,.2);border-radius:7px;padding:7px 10px;font-family:monospace;font-size:.74rem;color:var(--grn);margin-top:6px;word-break:break-all;}
+.sbadge{font-size:.64rem;font-weight:700;padding:2px 9px;border-radius:20px;}
+.sp2{background:rgba(255,170,68,.12);color:var(--acc2);}.sd2{background:rgba(0,232,122,.12);color:var(--grn);}
+.emp{text-align:center;padding:24px;color:var(--mut);font-size:.8rem;}
+.hlist{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.hi{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:10px;display:flex;align-items:center;gap:9px;}
+.hic{width:33px;height:33px;border-radius:9px;background:rgba(247,99,27,.1);display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0;}
+.hif{flex:1;min-width:0;}.hit{font-size:.76rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.hid{font-size:.63rem;color:var(--mut);margin-top:1px;}
+.hie{font-family:"Baloo 2",cursive;font-weight:800;font-size:.86rem;flex-shrink:0;}
+.acard{background:linear-gradient(135deg,#160f22,#0f0a1a);border:1px solid rgba(168,85,247,.22);border-radius:var(--r);padding:16px;margin-bottom:11px;}
+.acard h3{font-family:"Baloo 2",cursive;font-size:.92rem;font-weight:700;margin-bottom:3px;color:var(--pur);}
+.acard .asub{color:var(--mut);font-size:.7rem;margin-bottom:11px;}
+.valist{display:flex;flex-direction:column;gap:6px;}
+.vai{background:var(--s1);border:1px solid var(--bdr);border-radius:9px;padding:9px 12px;display:flex;align-items:center;gap:9px;}
+.vaimg{width:54px;height:34px;border-radius:6px;object-fit:cover;background:#111;flex-shrink:0;}
+.vattl{flex:1;font-size:.73rem;font-weight:600;line-height:1.3;}
+.tog{position:relative;width:38px;height:20px;flex-shrink:0;}
+.tog input{opacity:0;width:0;height:0;}
+.tsl{position:absolute;inset:0;background:#2a2a3a;border-radius:20px;cursor:pointer;transition:.3s;}
+.tsl::before{content:"";position:absolute;width:14px;height:14px;left:3px;bottom:3px;background:#888;border-radius:50%;transition:.3s;}
+.tog input:checked+.tsl{background:var(--grn);}
+.tog input:checked+.tsl::before{transform:translateX(18px);background:#fff;}
+.rmbtn{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;width:24px;height:24px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dbtn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:9px;padding:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.82rem;}
+.phdr2{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;text-align:center;margin-bottom:11px;}
+.pavbig{width:62px;height:62px;border-radius:50%;margin:0 auto 10px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;border:3px solid var(--acc);}
+.pnm{font-family:"Baloo 2",cursive;font-size:1.04rem;font-weight:700;}.pem{color:var(--mut);font-size:.73rem;margin-top:2px;}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px;}
+.pst{text-align:center;background:var(--s1);border-radius:10px;padding:10px 6px;}
+.pst .pv{font-family:"Baloo 2",cursive;font-size:1.05rem;font-weight:800;color:var(--acc2);}.pst .pl{font-size:.63rem;color:var(--mut);margin-top:2px;}
+.mlist{display:flex;flex-direction:column;gap:7px;}
+.mi{background:var(--s2);border:1px solid var(--bdr);border-radius:11px;padding:12px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:border-color .2s;}
+.mi:hover{border-color:var(--acc);}
+.mic{width:32px;height:32px;border-radius:8px;background:rgba(247,99,27,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.mit{flex:1;}.mit .mt{font-size:.8rem;font-weight:600;}.mit .ms2{font-size:.66rem;color:var(--mut);margin-top:1px;}
+.lbtn{width:100%;margin-top:10px;background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.28);color:#f87171;border-radius:11px;padding:11px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.82rem;}
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--s3);border:1px solid var(--grn);color:var(--grn);padding:8px 18px;border-radius:12px;font-weight:700;font-size:.78rem;z-index:999;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;max-width:90vw;}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+.mov{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center;}
+.mov.on{display:flex;}
+.mbx{background:var(--s2);border:1px solid var(--bdr);border-radius:22px 22px 0 0;padding:24px;width:100%;max-width:440px;animation:sup .3s ease;}
+@keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mcl{float:right;background:none;border:none;color:var(--mut);font-size:1.3rem;cursor:pointer;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
+
+/* ── ADS ── */
+.ad-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.ad-overlay.on{display:flex;}
+.ad-box{background:var(--s2);border:1px solid var(--bdr);border-radius:20px;width:100%;max-width:420px;overflow:hidden;position:relative;}
+.ad-label{position:absolute;top:10px;left:12px;background:rgba(255,208,96,.15);border:1px solid rgba(255,208,96,.3);color:var(--gold);font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:20px;z-index:1;}
+.ad-skip-wrap{position:absolute;top:10px;right:12px;z-index:1;}
+.ad-skip-btn{background:rgba(247,99,27,.9);color:#fff;border:none;border-radius:8px;padding:5px 11px;font-size:.74rem;font-weight:700;cursor:pointer;font-family:inherit;display:none;}
+.ad-skip-btn.on{display:block;}
+.ad-countdown{background:rgba(0,0,0,.5);color:#fff;border:1px solid var(--bdr);border-radius:8px;padding:5px 11px;font-size:.74rem;font-weight:700;}
+.ad-media{width:100%;aspect-ratio:16/9;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ad-media img{width:100%;height:100%;object-fit:cover;}
+.ad-media iframe{width:100%;height:100%;border:none;}
+.ad-body{padding:14px;}
+.ad-title{font-family:"Baloo 2",cursive;font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.ad-desc{font-size:.74rem;color:var(--mut);margin-bottom:10px;line-height:1.5;}
+.ad-cta{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border:none;border-radius:9px;padding:8px 18px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;}
+.ad-earn{background:rgba(0,232,122,.08);border:1px solid rgba(0,232,122,.2);border-radius:10px;padding:8px 12px;margin-top:9px;font-size:.74rem;color:var(--grn);font-weight:600;text-align:center;}
+
+/* Admin ad controls */
+.ad-list{display:flex;flex-direction:column;gap:7px;}
+.ad-item{background:var(--s1);border:1px solid var(--bdr);border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.ad-item-info{flex:1;}
+.ad-item-title{font-size:.78rem;font-weight:700;}
+.ad-item-meta{font-size:.65rem;color:var(--mut);margin-top:2px;}
+
+</style>
+</head>
+<body>
+
+<div id="LS" class="scr on">
+  <div class="lbox">
+    <div class="l-logo">&#127918; JunnuGaming</div>
+    <div class="l-sub">@junnugaminguk04yt &bull; Watch &amp; Earn</div>
+    <div class="l-info">
+      <p>&#10003; <b>Rs.10</b> kamao har <b>90 minute</b> mein</p>
+      <p>&#10003; Play Store, Amazon Pay &amp; UPI</p>
+      <p>&#10003; Video chalegi tab earning, rukegi tab band</p>
+      <p>&#10003; 100% Safe &amp; Transparent</p>
+    </div>
+    <button class="gbtn" id="gBtn">
+      <svg width="20" height="20" viewBox="0 0 48 48">
+        <path fill="#FFC107" d="M43.6 20H24v8h11.3C33.7 33.9 29.3 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 5.1 29.5 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21c11 0 20-8 20-21 0-1-.1-2-.4-3z"/>
+        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16.1 19 13 24 13c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 5.1 29.5 3 24 3 16.3 3 9.7 7.9 6.3 14.7z"/>
+        <path fill="#4CAF50" d="M24 45c5.2 0 10-1.9 13.7-5.1l-6.4-5.2C29.3 36.3 26.8 37 24 37c-5.2 0-9.6-3.1-11.3-7.6l-6.6 5C9.8 41.1 16.4 45 24 45z"/>
+        <path fill="#1976D2" d="M43.6 20H24v8h11.3c-.8 2.2-2.2 4-4 5.3l6.4 5.2C41.3 35.4 44 30.1 44 24c0-1-.1-2-.4-3z"/>
+      </svg>
+      Google se Login karo
+    </button>
+    <div class="alnk" id="aBtn">&#128273; Admin Login</div>
+  </div>
+</div>
+
+<div id="AS" class="scr">
+  <div class="tnav">
+    <div class="tlogo">&#127918; JunnuGaming</div>
+    <div class="tr">
+      <div class="bchip">Rs.<span id="NB">0.00</span></div>
+      <div class="avt" id="NA">U</div>
+    </div>
+  </div>
+
+  <div id="homePg" class="pg on">
+    <div class="hero">
+      <div><h2>Namaste, <span id="HN">Dost</span>! &#128075;</h2><p>Videos dekho aur daily kamao</p></div>
+      <div><div class="hamt">Rs.<span id="HB">0.00</span></div><div class="hlbl">Kul Kamai</div></div>
+    </div>
+    <div class="stitle">&#127918; Videos</div>
+    <div class="vgrid" id="VG"></div>
+  </div>
+
+  <div id="plPg" class="pg">
+    <div class="phdr">
+      <button class="bbtn" id="backBtn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Wapas
+      </button>
+    </div>
+    <!-- YouTube IFrame API player -->
+    <div class="player-outer" id="playerOuter">
+      <div id="ytPlayer"></div>
+    </div>
+    <div class="pbody">
+      <div class="ptit" id="PT">Video</div>
+      <div class="earn-status es-stop" id="ES">
+        <div class="es-icon" id="ESI">&#9208;</div>
+        <div><div class="es-title" id="EST">Video load ho raha hai...</div><div class="es-sub" id="ESS">Thoda wait karo</div></div>
+      </div>
+      <!-- Next Up Banner -->
+      <div id="nextUpBanner" style="display:none;background:var(--s3);border:1px solid rgba(56,200,255,.3);border-radius:12px;padding:10px 12px;margin-bottom:9px;align-items:center;gap:10px;">
+        <img id="nextUpThumb" src="" alt="" style="width:72px;height:44px;border-radius:7px;object-fit:cover;flex-shrink:0;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.65rem;color:var(--blu);font-weight:700;margin-bottom:2px;">&#9654;&#9654; Agli Video</div>
+          <div id="nextUpTitle" style="font-size:.76rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;">
+          <div style="background:var(--blu);color:#000;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:800;" id="nextUpCount">5s</div>
+          <button id="cancelNextBtn" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;border-radius:6px;padding:3px 8px;font-size:.65rem;cursor:pointer;font-family:inherit;font-weight:700;">&#10005; Cancel</button>
+        </div>
+      </div>
+      <div class="ebox">
+        <div><div class="elbl">Is video se kamai</div><div class="eval">Rs.<span id="VE">0.0000</span></div></div>
+        <div style="text-align:right"><div class="elbl">Watch Time</div><div class="etim"><span id="WT">0:00</span></div></div>
+      </div>
+      <div class="pbarw" id="PW">
+        <div class="pblbl"><span>Progress (90 min = Rs.10)</span><span id="EL">+Rs.0.0000</span></div>
+        <div class="pbtrack"><div class="pbfill" id="PF" style="width:0%"></div></div>
+      </div>
+      <div class="msrow" id="MR">
+        <div class="ms" id="M1"><div class="mv">5m</div><div>&#8377;0.05</div></div>
+        <div class="ms" id="M2"><div class="mv">15m</div><div>&#8377;0.17</div></div>
+        <div class="ms" id="M3"><div class="mv">30m</div><div>&#8377;0.33</div></div>
+        <div class="ms" id="M4"><div class="mv">60m</div><div>&#8377;0.67</div></div>
+        <div class="ms" id="M5"><div class="mv">90m</div><div>&#8377;10</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="earnPg" class="pg">
+    <div class="ecard">
+      <div class="ebig">Rs.<span id="TE">0.00</span></div>
+      <div class="esub">Kul Kamai (aaj tak)</div>
+      <div class="egrid">
+        <div class="ecell"><div class="v" id="TD">Rs.0.00</div><div class="l">Aaj ki Kamai</div></div>
+        <div class="ecell"><div class="v" id="VW">0</div><div class="l">Videos dekhe</div></div>
+        <div class="ecell"><div class="v" id="TW">Rs.0.00</div><div class="l">Withdrawn</div></div>
+        <div class="ecell"><div class="v" id="AB">Rs.0.00</div><div class="l">Available</div></div>
+      </div>
+    </div>
+    <div class="stitle">&#128203; Meri Requests</div>
+    <div id="MRQ" class="rlist"></div>
+    <div class="wcard">
+      <h3>&#128184; Redeem Karo</h3>
+      <div class="rogrid">
+        <div class="ro sel" id="RPS"><div class="ri2">&#127918;</div><div class="rn">Play Store</div><div class="rr">Rs.10-100</div></div>
+        <div class="ro" id="RAM"><div class="ri2">&#128230;</div><div class="rn">Amazon Pay</div><div class="rr">Rs.30-100</div></div>
+        <div class="ro" id="RUPI"><div class="ri2">&#128179;</div><div class="rn">UPI</div><div class="rr">Rs.50-100</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:9px">
+        <div class="irow">
+          <input type="number" class="inp" id="WA" placeholder="Amount (Rs.10-100)" style="flex:1">
+          <button class="wbtn" id="wdBtn">Bhejo</button>
+        </div>
+        <input type="text" class="inp" id="UF" placeholder="UPI ID (jaise: name@paytm)" style="display:none">
+      </div>
+      <div class="wnote" id="WN">Play Store: Rs.10-100 | 24-48 ghante mein code milega</div>
+    </div>
+    <div class="stitle">&#128336; History</div>
+    <div class="hlist" id="HL"></div>
+  </div>
+
+  <div id="admPg" class="pg">
+    <div class="acard">
+      <h3>&#127916; Video Control</h3>
+      <div class="asub">Videos ON/OFF karo, naye add karo, purane hatao</div>
+      <div class="valist" id="VAL"></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr)">
+        <div style="font-size:.76rem;font-weight:700;color:var(--pur);margin-bottom:8px">&#10133; Naya Video Add Karo</div>
+        <input type="text" class="inp" id="VI" placeholder="YouTube link ya Video ID (e.g. https://youtu.be/abc123 ya abc123xyz11)" style="margin-bottom:7px">
+        <input type="text" class="inp" id="VT" placeholder="Video Title" style="margin-bottom:7px">
+        <label style="display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--mut);cursor:pointer;margin-bottom:9px">
+          <input type="checkbox" id="VL" style="width:14px;height:14px;accent-color:var(--acc)"> LIVE badge dikhao
+        </label>
+        <button class="dbtn" id="addVidBtn">&#127916; Video Add Karo</button>
+      </div>
+    </div>
+    <div class="stitle">&#128184; Withdrawal Requests</div>
+    <div class="rtabs">
+      <div class="rtab on" id="TP">&#9203; Pending</div>
+      <div class="rtab" id="TC">&#10003; Completed</div>
+    </div>
+    <div id="RQL" class="rlist"></div>
+    <div class="acard" style="margin-top:10px">
+      <h3>&#128273; Manual Voucher</h3>
+      <div class="asub">Kisi bhi user ko code send karo</div>
+      <input type="text" class="inp" id="AE" placeholder="User Email" style="margin-bottom:7px">
+      <input type="text" class="inp" id="AC" placeholder="Code / UPI Ref" style="margin-bottom:7px;font-family:monospace;text-transform:uppercase">
+      <input type="number" class="inp" id="AA" placeholder="Amount (Rs.)" style="margin-bottom:9px">
+      <button class="dbtn" id="addVBtn">+ Add karo</button>
+    </div>
+    <div class="acard" style="margin-top:10px">
+      <h3>&#127916; Ad Management</h3>
+      <div class="asub">Ads add karo — video ke beech dikhenge</div>
+      <div class="ad-list" id="ADLIST" style="margin-bottom:11px"></div>
+      <div style="padding-top:11px;border-top:1px solid var(--bdr)">
+        <div style="font-size:.76rem;font-weight:700;color:var(--gold);margin-bottom:8px">&#10133; Naya Ad Add Karo</div>
+        <input type="text" class="inp" id="ADTITLE" placeholder="Ad Title" style="margin-bottom:7px">
+        <input type="text" class="inp" id="ADDESC" placeholder="Ad Description" style="margin-bottom:7px">
+        <input type="url" class="inp" id="ADIMG" placeholder="Image URL (https://...)" style="margin-bottom:7px">
+        <input type="url" class="inp" id="ADLINK" placeholder="Click URL (https://...)" style="margin-bottom:7px">
+        <input type="number" class="inp" id="ADREWARD" placeholder="Reward (Rs.) — e.g. 0.50" step="0.01" style="margin-bottom:7px">
+        <input type="number" class="inp" id="ADSKIP" placeholder="Skip ke baad seconds (e.g. 5)" style="margin-bottom:9px">
+        <input type="number" class="inp" id="ADFREQ" placeholder="Har kitne minutes pe dikhao (e.g. 5)" style="margin-bottom:9px">
+        <button class="dbtn" id="addAdBtn" style="background:linear-gradient(135deg,#b45309,#f59e0b)">&#127381; Ad Add Karo</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="profPg" class="pg">
+    <div class="phdr2">
+      <div class="pavbig" id="PAV">U</div>
+      <div class="pnm" id="PNM">User</div>
+      <div class="pem" id="PEM">—</div>
+      <div class="pstats">
+        <div class="pst"><div class="pv" id="PSV">0</div><div class="pl">Videos</div></div>
+        <div class="pst"><div class="pv" id="PSE">Rs.0</div><div class="pl">Earned</div></div>
+        <div class="pst"><div class="pv" id="PSW">Rs.0</div><div class="pl">Withdrawn</div></div>
+      </div>
+    </div>
+    <div class="mlist">
+      <div class="mi"><div class="mic">&#128202;</div><div class="mit"><div class="mt">Earning Report</div><div class="ms2">Puri history dekho</div></div></div>
+      <div class="mi"><div class="mic">&#127873;</div><div class="mit"><div class="mt">Referral Program</div><div class="ms2">Doston ko invite karo</div></div></div>
+      <div class="mi"><div class="mic">&#10067;</div><div class="mit"><div class="mt">Help &amp; Support</div><div class="ms2">Koi dikkat? Yahan hain</div></div></div>
+    </div>
+    <button class="lbtn" id="logoutBtn">&#128682; Logout</button>
+  </div>
+
+  <!-- AD OVERLAY -->
+  <div class="ad-overlay" id="adOverlay">
+    <div class="ad-box" id="adBox">
+      <div class="ad-label">&#127916; Sponsored</div>
+      <div class="ad-skip-wrap">
+        <div class="ad-countdown" id="adCountdown">5s mein skip</div>
+        <button class="ad-skip-btn" id="adSkipBtn">Skip Ad &#9654;</button>
+      </div>
+      <div class="ad-media" id="adMedia"></div>
+      <div class="ad-body">
+        <div class="ad-title" id="adTitle">Ad Title</div>
+        <div class="ad-desc" id="adDesc">Ad description yahan hogi</div>
+        <a href="#" class="ad-cta" id="adCta" target="_blank" rel="noopener">Aur Jaano &#8594;</a>
+        <div class="ad-earn" id="adEarn">&#127381; Yeh ad dekhne par Rs.0.50 milega!</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bnav">
+    <div class="bni on" id="BH"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</div>
+    <div class="bni" id="BE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Earnings</div>
+    <div class="bni" id="BAD" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin</div>
+    <div class="bni" id="BP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+  </nav>
+</div>
+
+<div class="toast" id="TST"></div>
+<div class="mov" id="MOD">
+  <div class="mbx">
+    <button class="mcl" id="modClose">&#10005;</button>
+    <div style="font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;margin-bottom:3px">&#127881; Request bheji gayi!</div>
+    <div style="color:var(--mut);font-size:.74rem;margin-bottom:13px">Admin 24-48 ghante mein approve karega</div>
+    <div style="background:rgba(0,232,122,.06);border:1px solid rgba(0,232,122,.18);border-radius:12px;padding:14px;margin-bottom:10px">
+      <div style="font-size:.7rem;color:var(--mut);margin-bottom:4px">Requested Amount</div>
+      <div style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:800;color:var(--grn)">Rs.<span id="MA">0</span></div>
+      <div style="font-size:.7rem;color:var(--mut);margin-top:3px">Type: <span id="MT" style="color:var(--acc2)">-</span></div>
+    </div>
+    <div style="font-size:.7rem;color:var(--mut);line-height:1.65">Approve hote hi code/transfer milega &bull; 100% Secure</div>
+  </div>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+(function(){
+"use strict";
+
+var AK="junnugaming";
+var VS=[
+  {id:"jS-wFVLiubI",t:"JunnuGaming - Latest Video",live:false},
+  {id:"lLb37gDM9jc",t:"JunnuGaming Live Stream 1",live:true},
+  {id:"ABgLWp_PAgI",t:"JunnuGaming Live Stream 2",live:true},
+  {id:"xx-Lphq5DWQ",t:"JunnuGaming Live Stream 3",live:true},
+  {id:"BDJz8IYQzx0",t:"JunnuGaming Live Stream 4",live:true}
+];
+var RLBL=["Play Store Voucher","Amazon Pay Voucher","UPI Transfer"];
+var RMIN=[10,30,50];
+var RMAX=[100,100,100];
+var RNT=["Play Store: Rs.10-100 | 24-48 ghante mein code | 100% Safe","Amazon Pay: Rs.30-100 | 24-48 ghante mein voucher | 100% Safe","UPI: Rs.50-100 | UPI ID zaroori | 24-48 ghante mein transfer | 100% Safe"];
+var EPS=10/5400;
+
+var U=null,ISADM=false;
+var BAL=0,TOD=0,VWC=0,WDR=0,HIST=[];
+var CUR=null,WS=0,VE=0,SR=0,WI=null;
+var RTAB=0;
+
+// ── CORE EARNING STATE ──
+// PLAYING = true means earning is ON
+var PLAYING=false;
+
+function setPlaying(val,title,sub){
+  PLAYING=val;
+  var es=document.getElementById("ES");
+  var icon=val?"▶️":"⏸️";
+  es.className="earn-status "+(val?"es-play":"es-stop");
+  document.getElementById("ESI").textContent=icon;
+  document.getElementById("EST").textContent=title;
+  document.getElementById("ESS").textContent=sub;
+}
+
+function gs(k,fb){try{var v=localStorage.getItem("jg6_"+k);return v!==null?JSON.parse(v):fb;}catch(e){return fb;}}
+function ss(k,v){try{localStorage.setItem("jg6_"+k,JSON.stringify(v));}catch(e){}}
+
+function doLogin(name,email){
+  U={name:name,email:email,ini:name.split(" ").map(function(x){return x[0].toUpperCase();}).join("").slice(0,2)};
+  ISADM=email.toLowerCase().indexOf(AK)!==-1;
+  var d=gs("u_"+email,null);
+  if(d){BAL=d.b||0;TOD=d.t||0;VWC=d.vw||0;WDR=d.wd||0;HIST=d.h||[];}
+  document.getElementById("LS").classList.remove("on");
+  document.getElementById("AS").classList.add("on");
+  if(ISADM){
+    document.getElementById("BAD").style.display="flex";
+    document.getElementById("PW").classList.add("aon");
+    document.getElementById("MR").classList.add("aon");
+  }
+  updUI();renderVids();
+}
+function saveD(){if(!U)return;ss("u_"+U.email,{b:BAL,t:TOD,vw:VWC,wd:WDR,h:HIST});}
+
+var ALLPG=["homePg","plPg","earnPg","admPg","profPg"];
+var ALLBN=["BH","BE","BAD","BP"];
+var PGBN={homePg:"BH",earnPg:"BE",admPg:"BAD",profPg:"BP"};
+function goPage(pid){
+  ALLPG.forEach(function(p){document.getElementById(p).classList.remove("on");});
+  ALLBN.forEach(function(b){document.getElementById(b).classList.remove("on");});
+  document.getElementById(pid).classList.add("on");
+  if(PGBN[pid])document.getElementById(PGBN[pid]).classList.add("on");
+  if(pid==="earnPg")renderEarn();
+  if(pid==="profPg")renderProf();
+  if(pid==="admPg")renderAdm();
+  if(pid!=="plPg"){
+    if(WI){clearInterval(WI);WI=null;}
+    PLAYING=false;
+  }
+}
+
+function getAllV(){
+  return VS.concat(gs("customVids",[]));
+}
+function getEn(){
+  var m=gs("ve",{});
+  return getAllV().filter(function(v){return m[v.id]!==false;});
+}
+function renderVids(){
+  var g=document.getElementById("VG");
+  var vs=getEn();
+  if(!vs.length){g.innerHTML="<div class='emp'>Abhi koi video nahi hai</div>";return;}
+  var h="";
+  for(var i=0;i<vs.length;i++){
+    var v=vs[i];
+    h+="<div class='vc' data-id='"+v.id+"' data-t='"+v.t.replace(/'/g,"&#39;")+"' data-live='"+(v.live?1:0)+"'>";
+        h+="<div class='vth'><img src='https://img.youtube.com/vi/"+v.id+"/hqdefault.jpg' data-fb='https://img.youtube.com/vi/"+v.id+"/mqdefault.jpg' class='vimg' alt=''>";
+    if(v.live)h+="<div class='vlive'><div class='vldot'></div>LIVE</div>";
+    h+="<div class='vchip'>+Rs. Kamao</div>";
+    h+="<div class='vplo'><svg viewBox='0 0 60 60' width='44' height='44'><circle cx='30' cy='30' r='30' fill='rgba(0,0,0,.55)'/><polygon points='23,17 43,30 23,43' fill='white'/></svg></div>";
+    h+="</div><div class='vi'><div class='vt'>"+v.t+"</div><div class='vm'><span>JunnuGaming</span><span class='vetag'>Watch &amp; Earn</span></div></div></div>";
+  }
+  g.innerHTML=h;
+  Array.prototype.forEach.call(g.getElementsByClassName("vc"),function(c){
+    c.addEventListener("click",function(){openVid(c.getAttribute("data-id"),c.getAttribute("data-t"));});
+  });
+}
+
+// ── YOUTUBE IFrame API ──
+var YTP=null; // YouTube Player instance
+
+// Called automatically by YouTube API when ready
+window.onYouTubeIframeAPIReady=function(){
+  // API ready — player will be created when user opens a video
+};
+
+function createPlayer(videoId){
+  if(YTP){
+    // Player exists — just load new video
+    YTP.loadVideoById(videoId);
+    return;
+  }
+  YTP=new YT.Player("ytPlayer",{
+    width:"100%",
+    height:"100%",
+    videoId:videoId,
+    playerVars:{autoplay:1,rel:0,modestbranding:1,playsinline:1},
+    events:{
+      onReady:function(e){e.target.playVideo();},
+      onStateChange:function(e){
+        var s=e.data;
+        if(s===YT.PlayerState.PLAYING){
+          // VIDEO CHALU — earning ON
+          PLAYING=true;
+          setPlaying(true,"Video chal rahi hai","Earning ho rahi hai...");
+        } else if(s===YT.PlayerState.PAUSED){
+          // VIDEO RUKA — earning OFF
+          PLAYING=false;
+          setPlaying(false,"Video ruki hai","Play karo — earning resume hogi");
+        } else if(s===YT.PlayerState.ENDED){
+          // VIDEO KHATAM — earning OFF
+          PLAYING=false;
+          setPlaying(false,"Video khatam!","Rs."+VE.toFixed(4)+" kamai hui");
+          // Auto play next video after 3 seconds
+          autoPlayNext();
+        } else if(s===YT.PlayerState.BUFFERING){
+          // BUFFERING — earning OFF
+          PLAYING=false;
+          setPlaying(false,"Buffering...","Load ho raha hai — earning ruki");
+        }
+      }
+    }
+  });
+}
+
+// ── AUTO PLAY NEXT ──
+var AUTO_NEXT_TIMER=null;
+function autoPlayNext(){
+  var allVids=getEn();
+  if(!allVids.length||!CUR)return;
+  // Find current video index
+  var curIdx=-1;
+  for(var i=0;i<allVids.length;i++){
+    if(allVids[i].id===CUR.id){curIdx=i;break;}
+  }
+  var nextIdx=(curIdx+1)%allVids.length;
+  var nextVid=allVids[nextIdx];
+
+  // Show countdown UI
+  setPlaying(false,"Agli video mein "+AUTO_NEXT_SEC+"s...","Cancel karne ke liye X dabao");
+  showNextCountdown(nextVid,AUTO_NEXT_SEC);
+}
+
+var AUTO_NEXT_SEC=5;
+var AUTO_NEXT_INTERVAL=null;
+function showNextCountdown(nextVid,secs){
+  clearInterval(AUTO_NEXT_INTERVAL);
+  clearTimeout(AUTO_NEXT_TIMER);
+
+  // Show next-up banner
+  var nb=document.getElementById("nextUpBanner");
+  var nt=document.getElementById("nextUpThumb");
+  var ntitle=document.getElementById("nextUpTitle");
+  var ncount=document.getElementById("nextUpCount");
+  nt.src="https://img.youtube.com/vi/"+nextVid.id+"/mqdefault.jpg";
+  ntitle.textContent=nextVid.t;
+  nb.style.display="flex";
+  var s=secs;
+  ncount.textContent=s+"s";
+  AUTO_NEXT_INTERVAL=setInterval(function(){
+    s--;
+    ncount.textContent=s+"s";
+    if(s<=0){
+      clearInterval(AUTO_NEXT_INTERVAL);
+      nb.style.display="none";
+      // Save current video earnings
+      if(VE>0&&CUR){VWC++;HIST.push({t:CUR.title,d:nowS(),a:VE,type:"earn"});saveD();}
+      openVid(nextVid.id,nextVid.t);
+    }
+  },1000);
+}
+
+function cancelAutoNext(){
+  clearInterval(AUTO_NEXT_INTERVAL);
+  clearTimeout(AUTO_NEXT_TIMER);
+  document.getElementById("nextUpBanner").style.display="none";
+  setPlaying(false,"Video khatam","Wapas jao ya koi aur video chuno");
+}
+
+// ── OPEN VIDEO ──
+function openVid(id,title){
+  CUR={id:id,title:title};WS=0;VE=0;PLAYING=false;
+  ALLPG.forEach(function(p){document.getElementById(p).classList.remove("on");});
+  ALLBN.forEach(function(b){document.getElementById(b).classList.remove("on");});
+  document.getElementById("plPg").classList.add("on");
+  document.getElementById("PT").textContent=title;
+
+  // Cancel any pending auto-next
+  clearInterval(AUTO_NEXT_INTERVAL);
+  clearTimeout(AUTO_NEXT_TIMER);
+  document.getElementById("nextUpBanner").style.display="none";
+
+  // Reset UI
+  document.getElementById("PF").style.width="0%";
+  document.getElementById("VE").textContent="0.0000";
+  document.getElementById("WT").textContent="0:00";
+  document.getElementById("EL").textContent="+Rs.0.0000";
+  for(var m=1;m<=5;m++)document.getElementById("M"+m).classList.remove("ok");
+  setPlaying(false,"Video load ho rahi hai...","Kuch seconds mein start hogi");
+
+  if(WI){clearInterval(WI);WI=null;}
+  WI=setInterval(tick,1000);
+  clearTimeout(AD_TIMER);
+  scheduleNextAd();
+
+  // Create or load player
+  if(typeof YT!=="undefined"&&YT.Player){
+    createPlayer(id);
+  } else {
+    // YT API not loaded yet — wait and retry
+    var tries=0;
+    var wait=setInterval(function(){
+      tries++;
+      if(typeof YT!=="undefined"&&YT.Player){
+        clearInterval(wait);
+        createPlayer(id);
+      } else if(tries>20){
+        clearInterval(wait);
+        // Fallback: plain iframe
+        document.getElementById("ytPlayer").innerHTML=
+          "<iframe src='https://www.youtube.com/embed/"+id+"?autoplay=1&rel=0&modestbranding=1' style='position:absolute;inset:0;width:100%;height:100%;border:none' allowfullscreen></iframe>";
+        setTimeout(function(){PLAYING=true;setPlaying(true,"Video chal rahi hai","Earning shuru!");},3000);
+      }
+    },200);
+  }
+}
+
+// ── TICK (only earns when PLAYING=true) ──
+function tick(){
+  if(!PLAYING)return;
+  WS++;VE+=EPS;BAL+=EPS;TOD+=EPS;
+  var pct=Math.min(100,(WS/5400)*100);
+  var m=Math.floor(WS/60),s=WS%60;
+  document.getElementById("WT").textContent=m+":"+(s<10?"0":"")+s;
+  document.getElementById("VE").textContent=VE.toFixed(4);
+  document.getElementById("EL").textContent="+Rs."+VE.toFixed(4);
+  document.getElementById("PF").style.width=pct+"%";
+  document.getElementById("NB").textContent=BAL.toFixed(2);
+  document.getElementById("HB").textContent=BAL.toFixed(2);
+  if(WS>=300)document.getElementById("M1").classList.add("ok");
+  if(WS>=900)document.getElementById("M2").classList.add("ok");
+  if(WS>=1800)document.getElementById("M3").classList.add("ok");
+  if(WS>=3600)document.getElementById("M4").classList.add("ok");
+  if(WS>=5400)document.getElementById("M5").classList.add("ok");
+  if(WS===60)showT("1 min! Earning chal rahi hai");
+  if(WS===300)showT("5 min! Rs."+VE.toFixed(3)+" mile");
+  if(WS===900)showT("15 min! Rs."+VE.toFixed(2)+" mile");
+  if(WS===1800)showT("30 min complete!");
+  if(WS===5400)showT("90 min! Rs.10 mil gayi!");
+  if(WS%30===0)saveD();
+}
+
+// ── VISIBILITY — tab chhupa to earning band ──
+document.addEventListener("visibilitychange",function(){
+  if(!CUR||!document.getElementById("plPg").classList.contains("on"))return;
+  if(document.hidden&&PLAYING){
+    PLAYING=false;
+    setPlaying(false,"Tab band hai","Wapas aao — earning resume hogi");
+  } else if(!document.hidden&&!PLAYING){
+    PLAYING=true;
+    setPlaying(true,"Video chal rahi hai","Earning ho rahi hai...");
+  }
+});
+
+function goBack(){
+  if(WI){clearInterval(WI);WI=null;}
+  clearInterval(AUTO_NEXT_INTERVAL);
+  clearTimeout(AUTO_NEXT_TIMER);
+  document.getElementById("nextUpBanner").style.display="none";
+  clearTimeout(AD_TIMER);
+  clearInterval(AD_SKIP_TIMER);
+  document.getElementById("adOverlay").classList.remove("on");
+  PLAYING=false;
+  // Stop YouTube player
+  if(YTP&&YTP.stopVideo){try{YTP.stopVideo();}catch(e){}}
+  if(VE>0&&CUR){VWC++;HIST.push({t:CUR.title,d:nowS(),a:VE,type:"earn"});saveD();}
+  CUR=null;
+  goPage("homePg");
+}
+
+function renderEarn(){
+  document.getElementById("TE").textContent=(BAL+WDR).toFixed(2);
+  document.getElementById("TD").textContent="Rs."+TOD.toFixed(2);
+  document.getElementById("VW").textContent=VWC;
+  document.getElementById("TW").textContent="Rs."+WDR.toFixed(2);
+  document.getElementById("AB").textContent="Rs."+BAL.toFixed(2);
+  var all=gs("reqs",[]),mine=all.filter(function(r){return r.email===U.email;});
+  var md=document.getElementById("MRQ");
+  if(!mine.length){md.innerHTML="<div class='emp'>Abhi koi request nahi</div>";}
+  else{
+    var h="";
+    for(var i=mine.length-1;i>=0;i--){
+      var r=mine[i];
+      h+="<div class='ri'><div class='ritop'><span class='rinm'>"+RLBL[r.rt]+"</span><span class='riamt'>Rs."+r.amt.toFixed(2)+"</span></div>";
+      h+="<div class='rimeta'>"+r.time+(r.upi?" | UPI: "+r.upi:"")+"</div>";
+      h+="<span class='sbadge "+(r.s==="p"?"sp2":"sd2")+"'>"+(r.s==="p"?"Pending":"Completed")+"</span>";
+      if(r.s==="d"&&r.code)h+="<div class='dcode'>Code: "+r.code+"</div>";
+      h+="</div>";
+    }
+    md.innerHTML=h;
+  }
+  var hl=document.getElementById("HL");
+  if(!HIST.length){hl.innerHTML="<div class='emp'>Koi history nahi</div>";return;}
+  var hh="";
+  for(var j=HIST.length-1;j>=0;j--){
+    var x=HIST[j];
+    hh+="<div class='hi'><div class='hic'>"+(x.type==="earn"?"&#127918;":"&#128184;")+"</div>";
+    hh+="<div class='hif'><div class='hit'>"+x.t+"</div><div class='hid'>"+x.d+"</div></div>";
+    hh+="<div class='hie' style='color:"+(x.type==="earn"?"var(--grn)":"#f87171")+";'>"+(x.type==="earn"?"+":"-")+"Rs."+x.a.toFixed(2)+"</div></div>";
+  }
+  hl.innerHTML=hh;
+}
+
+function selR(t){
+  SR=t;
+  ["RPS","RAM","RUPI"].forEach(function(id){document.getElementById(id).classList.remove("sel");});
+  document.getElementById(["RPS","RAM","RUPI"][t]).classList.add("sel");
+  document.getElementById("WN").textContent=RNT[t];
+  document.getElementById("UF").style.display=t===2?"block":"none";
+  document.getElementById("WA").placeholder="Amount (Rs."+RMIN[t]+"-"+RMAX[t]+")";
+}
+
+function doWd(){
+  var amt=parseFloat(document.getElementById("WA").value);
+  if(!amt||amt<RMIN[SR]){showT("Minimum Rs."+RMIN[SR]+" chahiye!");return;}
+  if(amt>RMAX[SR]){showT("Maximum Rs."+RMAX[SR]+" tak!");return;}
+  if(amt>BAL){showT("Balance kam hai!");return;}
+  var upi=document.getElementById("UF").value.trim();
+  if(SR===2&&!upi){showT("UPI ID daalo!");return;}
+  BAL-=amt;WDR+=amt;
+  HIST.push({t:RLBL[SR]+" Withdrawal",d:nowS(),a:amt,type:"withdraw"});
+  saveD();
+  var reqs=gs("reqs",[]);
+  reqs.push({id:Date.now(),email:U.email,name:U.name,rt:SR,amt:amt,upi:upi||null,time:nowS(),s:"p",code:null});
+  ss("reqs",reqs);
+  document.getElementById("MA").textContent=amt.toFixed(2);
+  document.getElementById("MT").textContent=RLBL[SR]+(upi?" - "+upi:"");
+  document.getElementById("MOD").classList.add("on");
+  document.getElementById("WA").value="";
+  document.getElementById("UF").value="";
+  updUI();
+}
+
+function renderAdm(){renderVAL();renderRQL();renderAdList();}
+function renderVAL(){
+  var m=gs("ve",{}),custom=gs("customVids",[]),allV=VS.concat(custom),h="";
+  for(var i=0;i<allV.length;i++){
+    var v=allV[i],isC=(i>=VS.length);
+    h+="<div class='vai'>";
+        h+="<img class='vaimg vimg' src='https://img.youtube.com/vi/"+v.id+"/mqdefault.jpg' data-fb='https://img.youtube.com/vi/"+v.id+"/default.jpg' alt=''>";
+    h+="<div class='vattl'>"+v.t+(isC?" <span style='font-size:.55rem;background:rgba(168,85,247,.3);color:var(--pur);padding:1px 5px;border-radius:3px'>Custom</span>":"")+"</div>";
+    h+="<div style='display:flex;align-items:center;gap:6px'>";
+    h+="<label class='tog'><input type='checkbox' "+(m[v.id]!==false?"checked":"")+" data-vid='"+v.id+"'><span class='tsl'></span></label>";
+    if(isC)h+="<button class='rmbtn' data-vid='"+v.id+"'>&#10005;</button>";
+    h+="</div></div>";
+  }
+  if(!allV.length)h="<div class='emp'>Koi video nahi</div>";
+  document.getElementById("VAL").innerHTML=h;
+  Array.prototype.forEach.call(document.getElementById("VAL").querySelectorAll("input[type=checkbox]"),function(chk){
+    chk.addEventListener("change",function(){
+      var mm=gs("ve",{});mm[chk.getAttribute("data-vid")]=chk.checked;ss("ve",mm);
+      renderVids();showT(chk.checked?"Video ON":"Video OFF");
+    });
+  });
+  Array.prototype.forEach.call(document.getElementById("VAL").querySelectorAll(".rmbtn"),function(btn){
+    btn.addEventListener("click",function(){
+      var vid=btn.getAttribute("data-vid");
+      ss("customVids",gs("customVids",[]).filter(function(v){return v.id!==vid;}));
+      var mm=gs("ve",{});delete mm[vid];ss("ve",mm);
+      renderVAL();renderVids();showT("Video remove ho gayi");
+    });
+  });
+}
+function renderRQL(){
+  var all=gs("reqs",[]),list=all.filter(function(r){return r.s===(RTAB===0?"p":"d");});
+  var el=document.getElementById("RQL");
+  if(!list.length){el.innerHTML="<div class='emp'>Koi "+(RTAB===0?"pending":"completed")+" request nahi</div>";return;}
+  var h="";
+  for(var i=list.length-1;i>=0;i--){
+    var r=list[i],bc=r.rt===0?"bps":(r.rt===1?"bam":"bupi");
+    h+="<div class='ri'><div class='ritop'><span class='rinm'>"+r.name+"</span><span class='riamt'>Rs."+r.amt.toFixed(2)+"</span></div>";
+    h+="<div class='rimeta'>"+r.email+" | "+r.time+"</div>";
+    h+="<span class='ribadge "+bc+"'>"+RLBL[r.rt]+(r.upi?" - "+r.upi:"")+"</span>";
+    if(r.s==="p")h+="<div class='crow'><input class='cinp' id='CI"+r.id+"' placeholder='Code / UPI Ref'><button class='appbtn' data-rid='"+r.id+"'>Approve</button></div>";
+    else h+="<div class='dcode'>Code: "+r.code+"</div>";
+    h+="</div>";
+  }
+  el.innerHTML=h;
+  Array.prototype.forEach.call(el.querySelectorAll(".appbtn"),function(btn){
+    btn.addEventListener("click",function(){
+      var rid=parseInt(btn.getAttribute("data-rid"));
+      var inp=document.getElementById("CI"+rid);
+      var code=inp?inp.value.trim():"";
+      if(!code){showT("Code daalo!");return;}
+      var rqs=gs("reqs",[]);
+      for(var x=0;x<rqs.length;x++){if(rqs[x].id===rid){rqs[x].s="d";rqs[x].code=code.toUpperCase();break;}}
+      ss("reqs",rqs);renderRQL();showT("Approved!");
+    });
+  });
+}
+
+function renderProf(){
+  if(!U)return;
+  document.getElementById("PAV").textContent=U.ini;
+  document.getElementById("PNM").textContent=U.name;
+  document.getElementById("PEM").textContent=U.email;
+  document.getElementById("PSV").textContent=VWC;
+  document.getElementById("PSE").textContent="Rs."+BAL.toFixed(0);
+  document.getElementById("PSW").textContent="Rs."+WDR.toFixed(0);
+}
+
+function updUI(){
+  if(!U)return;
+  document.getElementById("NB").textContent=BAL.toFixed(2);
+  document.getElementById("HB").textContent=BAL.toFixed(2);
+  document.getElementById("HN").textContent=U.name.split(" ")[0];
+  document.getElementById("NA").textContent=U.ini;
+}
+function showT(msg){
+  var el=document.getElementById("TST");
+  el.textContent=msg;el.classList.add("on");
+  setTimeout(function(){el.classList.remove("on");},2600);
+}
+function nowS(){return new Date().toLocaleString("en-IN");}
+
+// ── ADS SYSTEM ──
+var AD_TIMER=null;
+var AD_SKIP_TIMER=null;
+var AD_NEXT_IN=0; // seconds until next ad
+
+function getAds(){return gs("ads",[]);}
+
+function scheduleNextAd(){
+  clearTimeout(AD_TIMER);
+  var ads=getAds().filter(function(a){return a.active!==false;});
+  if(!ads.length)return;
+  var freq=ads[0].freq||5; // minutes
+  AD_NEXT_IN=freq*60;
+  AD_TIMER=setTimeout(function(){
+    if(PLAYING&&CUR){showAd();}
+    else{scheduleNextAd();}
+  },AD_NEXT_IN*1000);
+}
+
+function showAd(){
+  var ads=getAds().filter(function(a){return a.active!==false;});
+  if(!ads.length)return;
+  var ad=ads[Math.floor(Math.random()*ads.length)];
+
+  // Pause earning while ad plays
+  PLAYING=false;
+  if(YTP&&YTP.pauseVideo){try{YTP.pauseVideo();}catch(e){}}
+  setPlaying(false,"Ad chal raha hai...","Ad khatam hone par earning resume hogi");
+
+  // Fill ad content
+  document.getElementById("adTitle").textContent=ad.title||"Special Offer";
+  document.getElementById("adDesc").textContent=ad.desc||"";
+  document.getElementById("adCta").href=ad.link||"#";
+  document.getElementById("adEarn").textContent="Yeh ad dekhne par Rs."+(ad.reward||0.5).toFixed(2)+" milega!";
+
+  // Media
+  var med=document.getElementById("adMedia");
+  if(ad.img){
+    var ai=document.createElement('img');ai.src=ad.img;ai.alt='ad';ai.style.cssText='width:100%;height:100%;object-fit:cover';ai.onerror=function(){med.style.display='none';};med.innerHTML='';med.appendChild(ai);
+  } else {
+    med.innerHTML="<div style='color:var(--mut);font-size:.8rem'>&#127381; Ad</div>";
+  }
+
+  // Skip countdown
+  var skip=ad.skip||5;
+  var skipBtn=document.getElementById("adSkipBtn");
+  var countdown=document.getElementById("adCountdown");
+  skipBtn.classList.remove("on");
+  countdown.style.display="block";
+  countdown.textContent=skip+"s mein skip";
+
+  var secs=skip;
+  clearInterval(AD_SKIP_TIMER);
+  AD_SKIP_TIMER=setInterval(function(){
+    secs--;
+    if(secs<=0){
+      clearInterval(AD_SKIP_TIMER);
+      countdown.style.display="none";
+      skipBtn.classList.add("on");
+    } else {
+      countdown.textContent=secs+"s mein skip";
+    }
+  },1000);
+
+  document.getElementById("adOverlay").classList.add("on");
+}
+
+function closeAd(reward){
+  clearInterval(AD_SKIP_TIMER);
+  document.getElementById("adOverlay").classList.remove("on");
+  if(reward){
+    var ads=getAds().filter(function(a){return a.active!==false;});
+    var amt=ads.length?(ads[0].reward||0.5):0.5;
+    BAL+=amt;TOD+=amt;
+    HIST.push({t:"Ad Reward",d:nowS(),a:amt,type:"earn"});
+    saveD();updUI();
+    showT("Ad ke liye Rs."+amt.toFixed(2)+" mile!");
+  }
+  // Resume video
+  if(YTP&&YTP.playVideo){try{YTP.playVideo();}catch(e){}}
+  scheduleNextAd();
+}
+
+function renderAdList(){
+  var ads=getAds(),el=document.getElementById("ADLIST");
+  if(!ads.length){el.innerHTML="<div class='emp'>Koi ad nahi — neeche se add karo</div>";return;}
+  var h="";
+  for(var i=0;i<ads.length;i++){
+    var a=ads[i];
+    h+="<div class='ad-item'>";
+    h+="<div class='ad-item-info'><div class='ad-item-title'>"+a.title+"</div><div class='ad-item-meta'>Reward: Rs."+(a.reward||0.5).toFixed(2)+" | Skip: "+(a.skip||5)+"s | Har "+(a.freq||5)+"min</div></div>";
+    h+="<div style='display:flex;align-items:center;gap:6px'>";
+    h+="<label class='tog'><input type='checkbox' "+(a.active!==false?"checked":"")+" data-adid='"+a.id+"'><span class='tsl'></span></label>";
+    h+="<button class='rmbtn' data-adid='"+a.id+"'>&#10005;</button>";
+    h+="</div></div>";
+  }
+  el.innerHTML=h;
+  Array.prototype.forEach.call(el.querySelectorAll("input[type=checkbox]"),function(chk){
+    chk.addEventListener("change",function(){
+      var adid=parseInt(chk.getAttribute("data-adid"));
+      var arr=getAds();
+      for(var x=0;x<arr.length;x++){if(arr[x].id===adid){arr[x].active=chk.checked;break;}}
+      ss("ads",arr);showT(chk.checked?"Ad ON":"Ad OFF");
+    });
+  });
+  Array.prototype.forEach.call(el.querySelectorAll(".rmbtn"),function(btn){
+    btn.addEventListener("click",function(){
+      var adid=parseInt(btn.getAttribute("data-adid"));
+      ss("ads",getAds().filter(function(a){return a.id!==adid;}));
+      renderAdList();showT("Ad remove ho gayi");
+    });
+  });
+}
+
+// ── WIRE UP ALL BUTTONS ──
+document.addEventListener("DOMContentLoaded",function(){
+  // Global img fallback handler - no inline onerror needed
+  document.addEventListener("error",function(e){
+    if(e.target.tagName==="IMG"&&e.target.dataset.fb){
+      e.target.src=e.target.dataset.fb;
+      delete e.target.dataset.fb;
+    }
+  },true);
+  document.getElementById("gBtn").addEventListener("click",function(){
+    var ns=["Rahul Sharma","Priya Singh","Amit Kumar","Sneha Patel","Rohit Verma","Neha Gupta"];
+    var n=ns[Math.floor(Math.random()*ns.length)];
+    doLogin(n,n.toLowerCase().replace(/ /g,".")+Math.floor(Math.random()*99)+"@gmail.com");
+  });
+  document.getElementById("aBtn").addEventListener("click",function(){doLogin("Admin JunnuGaming","admin@junnugaming.com");});
+  document.getElementById("backBtn").addEventListener("click",goBack);
+  document.getElementById("BH").addEventListener("click",function(){goPage("homePg");});
+  document.getElementById("BE").addEventListener("click",function(){goPage("earnPg");});
+  document.getElementById("BAD").addEventListener("click",function(){goPage("admPg");});
+  document.getElementById("BP").addEventListener("click",function(){goPage("profPg");});
+  document.getElementById("RPS").addEventListener("click",function(){selR(0);});
+  document.getElementById("RAM").addEventListener("click",function(){selR(1);});
+  document.getElementById("RUPI").addEventListener("click",function(){selR(2);});
+  document.getElementById("wdBtn").addEventListener("click",doWd);
+  document.getElementById("TP").addEventListener("click",function(){RTAB=0;document.getElementById("TP").classList.add("on");document.getElementById("TC").classList.remove("on");renderRQL();});
+  document.getElementById("TC").addEventListener("click",function(){RTAB=1;document.getElementById("TC").classList.add("on");document.getElementById("TP").classList.remove("on");renderRQL();});
+  document.getElementById("modClose").addEventListener("click",function(){document.getElementById("MOD").classList.remove("on");});
+  document.getElementById("logoutBtn").addEventListener("click",function(){saveD();location.reload();});
+  document.getElementById("adSkipBtn").addEventListener("click",function(){closeAd(true);});
+  document.getElementById("cancelNextBtn").addEventListener("click",cancelAutoNext);
+  // CTA click = also reward
+  document.getElementById("adCta").addEventListener("click",function(){
+    setTimeout(function(){closeAd(true);},300);
+  });
+  document.getElementById("addAdBtn").addEventListener("click",function(){
+    var title=document.getElementById("ADTITLE").value.trim();
+    var desc=document.getElementById("ADDESC").value.trim();
+    var img=document.getElementById("ADIMG").value.trim();
+    var link=document.getElementById("ADLINK").value.trim();
+    var reward=parseFloat(document.getElementById("ADREWARD").value)||0.5;
+    var skip=parseInt(document.getElementById("ADSKIP").value)||5;
+    var freq=parseInt(document.getElementById("ADFREQ").value)||5;
+    if(!title){showT("Ad title daalo!");return;}
+    var ads=getAds();
+    ads.push({id:Date.now(),title:title,desc:desc,img:img,link:link,reward:reward,skip:skip,freq:freq,active:true});
+    ss("ads",ads);
+    document.getElementById("ADTITLE").value="";
+    document.getElementById("ADDESC").value="";
+    document.getElementById("ADIMG").value="";
+    document.getElementById("ADLINK").value="";
+    document.getElementById("ADREWARD").value="";
+    document.getElementById("ADSKIP").value="";
+    document.getElementById("ADFREQ").value="";
+    renderAdList();showT("Ad add ho gayi!");
+  });
+  document.getElementById("addVidBtn").addEventListener("click",function(){
+    var raw=document.getElementById("VI").value.trim();
+    var t=document.getElementById("VT").value.trim();
+    var live=document.getElementById("VL").checked;
+    if(!raw){showT("YouTube link ya Video ID daalo!");return;}
+    if(!t){showT("Video title daalo!");return;}
+
+    // Extract video ID from any YouTube URL format OR plain ID
+    var id=raw;
+
+    // Try all common YouTube URL patterns
+    var patterns=[
+      /[?&]v=([a-zA-Z0-9_-]{11})/,
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/,
+      /^([a-zA-Z0-9_-]{11})$/
+    ];
+    var found=false;
+    for(var pi=0;pi<patterns.length;pi++){
+      var m=raw.match(patterns[pi]);
+      if(m){id=m[1];found=true;break;}
+    }
+    if(!found||id.length!==11){
+      showT("Sahi YouTube link ya 11-digit ID daalo!");return;
+    }
+
+    var cv=gs("customVids",[]);
+    if(VS.concat(cv).some(function(v){return v.id===id;})){showT("Yeh video already add hai!");return;}
+    cv.push({id:id,t:t,live:live});
+    ss("customVids",cv);
+    document.getElementById("VI").value="";
+    document.getElementById("VT").value="";
+    document.getElementById("VL").checked=false;
+    renderVAL();renderVids();showT("Video add ho gayi! ✓");
+  });
+  document.getElementById("addVBtn").addEventListener("click",function(){
+    var email=document.getElementById("AE").value.trim();
+    var code=document.getElementById("AC").value.trim().toUpperCase();
+    var amt=parseFloat(document.getElementById("AA").value);
+    if(!email||!code||!amt){showT("Sabhi fields bharo!");return;}
+    var reqs=gs("reqs",[]);
+    reqs.push({id:Date.now(),email:email,name:email,rt:0,amt:amt,upi:null,time:nowS(),s:"d",code:code});
+    ss("reqs",reqs);showT("Voucher add ho gaya!");
+    document.getElementById("AE").value="";document.getElementById("AC").value="";document.getElementById("AA").value="";
+  });
+});
+
+})();
+</script>
+</body>
+</html>
