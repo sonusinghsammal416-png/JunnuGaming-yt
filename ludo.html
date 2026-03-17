@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>लूडो</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Tiro+Devanagari+Hindi&display=swap');
+
+  :root {
+    --red: #e63946;
+    --green: #2dc653;
+    --yellow: #ffd166;
+    --blue: #118ab2;
+    --red-light: #ffb3b8;
+    --green-light: #b3f0c4;
+    --yellow-light: #fff3cc;
+    --blue-light: #b3dff0;
+    --board-bg: #f5f0e8;
+    --cell-border: #c8b89a;
+    --safe-star: #f7d060;
+    --white: #fff;
+    --shadow: 0 8px 32px rgba(60,40,10,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: radial-gradient(ellipse at 60% 20%, #1a0533 0%, #0d001a 60%, #000 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Baloo 2', sans-serif;
+    padding: 16px 8px 32px;
+  }
+
+  h1 {
+    color: #ffd166;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 16px #ffd16688;
+  }
+
+  .subtitle {
+    color: #c9b8f0;
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+
+  .game-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  /* ===== BOARD ===== */
+  .board-container {
+    background: var(--board-bg);
+    border-radius: 18px;
+    box-shadow: var(--shadow), 0 0 0 6px #3a1a6a, 0 0 0 10px #ffd16655;
+    padding: 10px;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--cell-border);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cell {
+    border: 1px solid #d4c4a8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    position: relative;
+    cursor: default;
+    transition: background 0.15s;
+  }
+
+  /* Color homes */
+  .home-red { background: var(--red) !important; }
+  .home-green { background: var(--green) !important; }
+  .home-yellow { background: var(--yellow) !important; }
+  .home-blue { background: var(--blue) !important; }
+
+  /* Home inner circle areas */
+  .home-inner-red { background: #fff3f3 !important; border: 2px solid var(--red) !important; border-radius: 50%; margin: 6%; width: 88%; height: 88%; }
+  .home-inner-green { background: #f3fff5 !important; border: 2px solid var(--green) !important; border-radius: 50%; }
+  .home-inner-yellow { background: #fffcf0 !important; border: 2px solid var(--yellow) !important; border-radius: 50%; }
+  .home-inner-blue { background: #f0f8ff !important; border: 2px solid var(--blue) !important; border-radius: 50%; }
+
+  /* Safe cells */
+  .safe { background: var(--safe-star) !important; }
+  .safe::after { content: '★'; font-size: 0.7rem; color: #9b5d00; }
+
+  /* Path cells */
+  .path-red { background: var(--red-light) !important; }
+  .path-green { background: var(--green-light) !important; }
+  .path-yellow { background: var(--yellow-light) !important; }
+  .path-blue { background: var(--blue-light) !important; }
+
+  /* Center */
+  .center-tl { background: var(--red) !important; }
+  .center-tr { background: var(--green) !important; }
+  .center-bl { background: var(--yellow) !important; }
+  .center-br { background: var(--blue) !important; }
+
+  /* Center home triangle overlay */
+  .center-cell {
+    grid-column: 7 / 10;
+    grid-row: 7 / 10;
+    background: white !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .center-home-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  /* Tokens */
+  .token {
+    width: 72%;
+    height: 72%;
+    border-radius: 50%;
+    border: 2.5px solid rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: rgba(0,0,0,0.5);
+  }
+
+  .token:hover { transform: scale(1.25); box-shadow: 0 4px 14px rgba(0,0,0,0.4); }
+  .token.movable { animation: pulse 0.7s infinite alternate; cursor: pointer; }
+  .token.red-token { background: radial-gradient(circle at 35% 35%, #ff6b6b, var(--red)); }
+  .token.green-token { background: radial-gradient(circle at 35% 35%, #6bffaa, var(--green)); }
+  .token.yellow-token { background: radial-gradient(circle at 35% 35%, #ffe96b, #f0b800); }
+  .token.blue-token { background: radial-gradient(circle at 35% 35%, #6bbfff, var(--blue)); }
+
+  @keyframes pulse {
+    from { box-shadow: 0 0 0 0 rgba(255,255,100,0.6); }
+    to { box-shadow: 0 0 0 8px rgba(255,255,100,0); }
+  }
+
+  /* Multiple tokens on same cell offset */
+  .token-1 { top: 5%; left: 5%; }
+  .token-2 { top: 5%; right: 5%; }
+  .token-3 { bottom: 5%; left: 5%; }
+  .token-4 { bottom: 5%; right: 5%; }
+
+  /* ===== CONTROLS ===== */
+  .controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .players-strip {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .player-card {
+    flex: 1;
+    max-width: 110px;
+    border-radius: 12px;
+    padding: 8px 6px;
+    text-align: center;
+    border: 2.5px solid transparent;
+    transition: border 0.2s, transform 0.2s;
+    opacity: 0.6;
+  }
+
+  .player-card.active {
+    border-color: #ffd166;
+    opacity: 1;
+    transform: scale(1.06);
+    box-shadow: 0 4px 18px rgba(255,209,102,0.35);
+  }
+
+  .player-card.red-card { background: #4a0a10; color: #ffb3b8; }
+  .player-card.green-card { background: #0a3a18; color: #b3f0c4; }
+  .player-card.yellow-card { background: #3a2e00; color: #fff3cc; }
+  .player-card.blue-card { background: #001f3a; color: #b3dff0; }
+
+  .player-name { font-size: 0.8rem; font-weight: 700; }
+  .player-tokens-left { font-size: 0.65rem; margin-top: 2px; opacity: 0.8; }
+
+  .dice-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .dice {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: white;
+    border: 3px solid #ffd166;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,209,102,0.3), 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.12s, box-shadow 0.12s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dice:hover { transform: scale(1.1) rotate(-3deg); }
+  .dice:active { transform: scale(0.95); }
+  .dice.rolling { animation: roll 0.5s ease-out; }
+
+  @keyframes roll {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(180deg) scale(1.1); }
+    50% { transform: rotate(270deg) scale(0.9); }
+    75% { transform: rotate(360deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .dice.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+  .status-msg {
+    color: #ffd166;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 8px 20px;
+    border-radius: 30px;
+    border: none;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-new {
+    background: linear-gradient(135deg, #ffd166, #f0a000);
+    color: #1a0800;
+    box-shadow: 0 3px 12px rgba(255,160,0,0.35);
+  }
+
+  .btn-new:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(255,160,0,0.5); }
+
+  .winner-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,0,25,0.92);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .winner-overlay.show { display: flex; }
+  .winner-text { font-size: 2.8rem; font-weight: 800; color: #ffd166; text-shadow: 0 0 30px #ffd166; animation: pop 0.5s ease; }
+  .winner-sub { color: #c9b8f0; font-size: 1rem; }
+
+  @keyframes pop {
+    0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+    70% { transform: scale(1.15) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .confetti-emoji { font-size: 2rem; animation: float 1.5s ease-in-out infinite alternate; }
+  @keyframes float { from { transform: translateY(0); } to { transform: translateY(-12px) rotate(10deg); } }
+</style>
+</head>
+<body>
+
+<h1>🎲 लूडो</h1>
+<p class="subtitle">4 खिलाड़ी • क्लासिक बोर्ड गेम</p>
+
+<div class="game-wrap">
+  <div class="board-container">
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="controls">
+    <div class="players-strip" id="playersStrip"></div>
+    <div class="dice-area">
+      <div class="dice" id="dice" onclick="rollDice()">🎲</div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">
+        <div class="status-msg" id="statusMsg">🎲 पासा फेंकें!</div>
+        <div class="btn-row">
+          <button class="btn btn-new" onclick="newGame()">🔄 नया खेल</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="winner-overlay" id="winnerOverlay">
+  <div class="confetti-emoji">🎉</div>
+  <div class="winner-text" id="winnerText"></div>
+  <div class="winner-sub" id="winnerSub"></div>
+  <button class="btn btn-new" style="margin-top:8px" onclick="newGame()">🔄 फिर खेलें</button>
+  <div class="confetti-emoji" style="animation-delay:0.3s">🏆</div>
+</div>
+
+<script>
+// =================== LUDO GAME ENGINE ===================
+
+const DICE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+const COLORS = ['red','green','yellow','blue'];
+const COLOR_NAMES = { red:'लाल', green:'हरा', yellow:'पीला', blue:'नीला' };
+
+// 15x15 board cell definitions
+// Each cell: { type, color, ... }
+// Types: 'home', 'path', 'safe', 'center', 'home-path', 'blank'
+
+// Main path (52 cells), 0-indexed, going clockwise
+// Coordinates: [row, col] in 0-indexed 15x15 grid
+const MAIN_PATH = [
+  // Red start area (top-left quadrant going down then right)
+  [6,1],[6,2],[6,3],[6,4],[6,5],
+  [5,6],[4,6],[3,6],[2,6],[1,6],[0,6],
+  [0,7],[0,8],
+  [1,8],[2,8],[3,8],[4,8],[5,8],
+  [6,9],[6,10],[6,11],[6,12],[6,13],[6,14],
+  [7,14],[8,14],
+  [8,13],[8,12],[8,11],[8,10],[8,9],
+  [9,8],[10,8],[11,8],[12,8],[13,8],[14,8],
+  [14,7],[14,6],
+  [13,6],[12,6],[11,6],[10,6],[9,6],
+  [8,5],[8,4],[8,3],[8,2],[8,1],[8,0],
+  [7,0]
+];
+
+// Home stretch paths (6 cells each leading to center)
+const HOME_PATHS = {
+  red:    [[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
+  green:  [[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
+  yellow: [[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],
+  blue:   [[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]],
+};
+
+// Starting positions on main path (index in MAIN_PATH) for each color
+const START_INDEX = { red:0, green:13, yellow:26, blue:39 };
+// Safe cells indices in MAIN_PATH
+const SAFE_INDICES = new Set([0,8,13,21,26,34,39,47]);
+// Home cell coordinates
+const HOME_CELLS = {
+  red:    [[1,1],[1,2],[2,1],[2,2]],
+  green:  [[1,11],[1,12],[2,11],[2,12]],
+  yellow: [[11,11],[11,12],[12,11],[12,12]],
+  blue:   [[11,1],[11,2],[12,1],[12,2]],
+};
+
+// Token state: pos = -1 (home), 0-51 (main path), 52-57 (home stretch 0-5), 58 (finished)
+let state = {};
+
+function initState() {
+  state = {
+    tokens: {},
+    currentPlayer: 0,
+    diceValue: null,
+    diceRolled: false,
+    phase: 'roll', // 'roll' | 'move' | 'done'
+    winner: null,
+  };
+  COLORS.forEach(c => {
+    state.tokens[c] = [
+      { pos: -1, id: 0 },
+      { pos: -1, id: 1 },
+      { pos: -1, id: 2 },
+      { pos: -1, id: 3 },
+    ];
+  });
+}
+
+function getAbsPos(color, relPos) {
+  // relPos: 0-51 main path. Absolute index in MAIN_PATH
+  return (START_INDEX[color] + relPos) % 52;
+}
+
+function getTokenCell(color, token) {
+  const pos = token.pos;
+  if (pos === -1) return null; // in home
+  if (pos === 58) return 'finished';
+  if (pos >= 52) {
+    // home stretch
+    return HOME_PATHS[color][pos - 52];
+  }
+  return MAIN_PATH[getAbsPos(color, pos)];
+}
+
+function canMoveToken(color, token, dice) {
+  const pos = token.pos;
+  if (pos === 58) return false;
+  if (pos === -1) return dice === 6;
+  if (pos >= 52) {
+    // home stretch
+    const newStretch = (pos - 52) + dice;
+    if (newStretch === 5) return true; // reaches end
+    if (newStretch > 5) return false;
+    return true;
+  }
+  // main path
+  const newPos = pos + dice;
+  if (newPos > 56) return false; // can't overshoot
+  return true;
+}
+
+function moveToken(colorIdx, tokenIdx) {
+  const color = COLORS[colorIdx];
+  const token = state.tokens[color][tokenIdx];
+  const dice = state.diceValue;
+
+  if (!canMoveToken(color, token, dice)) return false;
+
+  // Move
+  if (token.pos === -1) {
+    token.pos = 0; // enter board
+  } else if (token.pos >= 52) {
+    token.pos += dice;
+    if (token.pos >= 58) { token.pos = 58; }
+  } else {
+    const newPos = token.pos + dice;
+    if (newPos >= 52) {
+      token.pos = newPos;
+      if (token.pos >= 58) token.pos = 58;
+    } else {
+      token.pos = newPos;
+    }
+  }
+
+  // Check capture (if on main path)
+  let captured = false;
+  if (token.pos < 52 && token.pos !== -1 && token.pos !== 58) {
+    const absIdx = getAbsPos(color, token.pos);
+    if (!SAFE_INDICES.has(absIdx)) {
+      COLORS.forEach(c => {
+        if (c === color) return;
+        state.tokens[c].forEach(t => {
+          if (t.pos === -1 || t.pos >= 52 || t.pos === 58) return;
+          const theirAbs = getAbsPos(c, t.pos);
+          if (theirAbs === absIdx) {
+            t.pos = -1;
+            captured = true;
+          }
+        });
+      });
+    }
+  }
+
+  // Check win
+  if (state.tokens[color].every(t => t.pos === 58)) {
+    state.phase = 'done';
+    state.winner = color;
+    return true;
+  }
+
+  // Extra turn on 6 or capture
+  if (dice === 6 || captured) {
+    state.phase = 'roll';
+    state.diceRolled = false;
+    state.diceValue = null;
+    setStatus(`${COLOR_NAMES[color]} ने ${captured ? 'काटा!' : '6 आया!'} फिर से फेंकें!`);
+  } else {
+    nextPlayer();
+  }
+
+  state.phase = state.phase === 'done' ? 'done' : 'roll';
+  render();
+  return true;
+}
+
+function nextPlayer() {
+  state.currentPlayer = (state.currentPlayer + 1) % 4;
+  state.diceRolled = false;
+  state.diceValue = null;
+}
+
+function rollDice() {
+  if (state.phase === 'done') return;
+  if (state.diceRolled) return;
+
+  const dice = document.getElementById('dice');
+  dice.classList.add('rolling');
+  setTimeout(() => dice.classList.remove('rolling'), 500);
+
+  state.diceValue = Math.ceil(Math.random() * 6);
+  state.diceRolled = true;
+
+  const color = COLORS[state.currentPlayer];
+  const name = COLOR_NAMES[color];
+
+  // Check if any token can move
+  const movable = state.tokens[color].filter(t => canMoveToken(color, t, state.diceValue));
+  if (movable.length === 0) {
+    setStatus(`${name}: ${state.diceValue} आया — कोई चाल नहीं!`);
+    setTimeout(() => {
+      nextPlayer();
+      state.diceRolled = false;
+      state.diceValue = null;
+      render();
+    }, 1000);
+  } else if (movable.length === 1) {
+    // Auto move if only one option
+    setStatus(`${name}: ${state.diceValue} आया!`);
+    render();
+    setTimeout(() => {
+      const idx = state.tokens[color].indexOf(movable[0]);
+      moveToken(state.currentPlayer, idx);
+    }, 400);
+  } else {
+    state.phase = 'move';
+    setStatus(`${name}: ${state.diceValue} आया — टोकन चुनें!`);
+    render();
+  }
+}
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+// =================== BOARD RENDERING ===================
+
+let boardCells = []; // 15x15 array of cell elements
+
+function buildBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  boardCells = Array.from({length: 15}, () => Array(15).fill(null));
+
+  for (let r = 0; r < 15; r++) {
+    for (let c = 0; c < 15; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+      boardCells[r][c] = cell;
+      board.appendChild(cell);
+    }
+  }
+
+  // Color the quadrant homes
+  // Red: rows 0-5, cols 0-5
+  colorQuadrant(0,0,6,6,'red');
+  // Green: rows 0-5, cols 9-14
+  colorQuadrant(0,9,6,6,'green');
+  // Yellow: rows 9-14, cols 9-14
+  colorQuadrant(9,9,6,6,'yellow');
+  // Blue: rows 9-14, cols 0-5
+  colorQuadrant(9,0,6,6,'blue');
+
+  // Inner home squares
+  colorInner(1,1,4,4,'red');
+  colorInner(1,10,4,4,'green');
+  colorInner(10,10,4,4,'yellow');
+  colorInner(10,1,4,4,'blue');
+
+  // Color home stretch paths
+  HOME_PATHS.red.forEach(([r,c]) => boardCells[r][c].classList.add('path-red'));
+  HOME_PATHS.green.forEach(([r,c]) => boardCells[r][c].classList.add('path-green'));
+  HOME_PATHS.yellow.forEach(([r,c]) => boardCells[r][c].classList.add('path-yellow'));
+  HOME_PATHS.blue.forEach(([r,c]) => boardCells[r][c].classList.add('path-blue'));
+
+  // Safe cells
+  SAFE_INDICES.forEach(i => {
+    const [r,c] = MAIN_PATH[i];
+    boardCells[r][c].classList.add('safe');
+  });
+
+  // Starting cells colored
+  boardCells[MAIN_PATH[0][0]][MAIN_PATH[0][1]].classList.add('path-red');
+  boardCells[MAIN_PATH[13][0]][MAIN_PATH[13][1]].classList.add('path-green');
+  boardCells[MAIN_PATH[26][0]][MAIN_PATH[26][1]].classList.add('path-yellow');
+  boardCells[MAIN_PATH[39][0]][MAIN_PATH[39][1]].classList.add('path-blue');
+
+  // Center
+  paintCenter();
+}
+
+function colorQuadrant(sr,sc,rows,cols,color) {
+  for (let r = sr; r < sr+rows; r++)
+    for (let c = sc; c < sc+cols; c++)
+      boardCells[r][c].classList.add('home-'+color);
+}
+
+function colorInner(sr,sc,rows,cols,color) {
+  for (let r = sr; r < sr+rows; r++)
+    for (let c = sc; c < sc+cols; c++) {
+      boardCells[r][c].className = 'cell';
+      boardCells[r][c].style.background = color === 'red' ? '#fff3f3' :
+        color === 'green' ? '#f3fff5' : color === 'yellow' ? '#fffcf0' : '#f0f8ff';
+      boardCells[r][c].style.border = `1px solid var(--${color})`;
+      if (r === sr && c === sc) boardCells[r][c].style.borderRadius = '50% 0 0 0';
+      if (r === sr && c === sc+cols-1) boardCells[r][c].style.borderRadius = '0 50% 0 0';
+      if (r === sr+rows-1 && c === sc) boardCells[r][c].style.borderRadius = '0 0 0 50%';
+      if (r === sr+rows-1 && c === sc+cols-1) boardCells[r][c].style.borderRadius = '0 0 50% 0';
+    }
+}
+
+function paintCenter() {
+  // rows 6-8, cols 6-8
+  const colors = [
+    [[6,6],'red'],[[6,7],'green'],[[6,8],'green'],
+    [[7,6],'red'],[[7,8],'yellow'],
+    [[8,6],'blue'],[[8,7],'blue'],[[8,8],'yellow'],
+  ];
+  colors.forEach(([[r,c],col]) => {
+    boardCells[r][c].style.background = `var(--${col})`;
+    boardCells[r][c].style.opacity = '0.85';
+  });
+  boardCells[7][7].style.background = '#fff';
+  boardCells[7][7].innerHTML = '<span style="font-size:1.3rem">🏠</span>';
+}
+
+function render() {
+  // Clear all tokens from cells
+  document.querySelectorAll('.token').forEach(t => t.remove());
+
+  const color = COLORS[state.currentPlayer];
+
+  // Place tokens
+  COLORS.forEach((c, ci) => {
+    state.tokens[c].forEach((token, ti) => {
+      if (token.pos === 58) return; // finished, show in center
+
+      let cell;
+      if (token.pos === -1) {
+        // In home box
+        const [r, co] = HOME_CELLS[c][ti];
+        cell = boardCells[r][co];
+      } else {
+        const coord = getTokenCell(c, token);
+        if (!coord || coord === 'finished') return;
+        cell = boardCells[coord[0]][coord[1]];
+      }
+
+      if (!cell) return;
+
+      const t = document.createElement('div');
+      t.className = `token ${c}-token token-${ti+1}`;
+      t.textContent = ti + 1;
+
+      // Mark movable
+      const isCurrentPlayer = ci === state.
