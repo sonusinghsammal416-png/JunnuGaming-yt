@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.junnugaming.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    
+    <name>JunnuGaming</name>
+    
+    <description>
+        Watch Gaming Videos & Earn Coins App
+    </description>
+    
+    <author email="support@junnugaming.com" href="https://junnugaming.com">
+        JunnuGaming Team
+    </author>
+
+    <!-- App Settings -->
+    <content src="index.html" />
+    
+    <access origin="*" />
+    
+    <!-- Allow navigation -->
+    <allow-navigation href="*" />
+    
+    <!-- Platform -->
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <allow-intent href="http:*/*" />
+        <allow-intent href="https:*/*" />
+    </platform>
+
+    <!-- Splash Screen -->
+    <preference name="SplashScreenDelay" value="3000" />
+
+    <!-- Orientation -->
+    <preference name="Orientation" value="portrait" />
+
+    <!-- Fullscreen -->
+    <preference name="Fullscreen" value="true" />
+
+    <!-- Status Bar -->
+    <preference name="StatusBarStyle" value="lightcontent" />
+
+</widget>
